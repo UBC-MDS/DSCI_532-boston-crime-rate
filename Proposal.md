@@ -9,6 +9,8 @@ Like any typical city, it is good knowledge for the city to know what type of cr
 
 ### Section 2: Description of the data
 
+This Dataset was approved by our lab TA - Joel Ostblom
+
 **Tabular Data:**
 [Crimes in Boston]( https://www.kaggle.com/ankkur13/boston-crime-data/home)
 
@@ -29,4 +31,4 @@ These variables will be used to determine the location within the city of Boston
 
 ### Section 3: Usage scenario & tasks
 
-Next month, Brenda, a Vancouver local, will be taking a business trip to Boston. She will be staying for 5 days and is curious about what precautions she should take before traveling.  Brenda wants to [compare] which neighbourhoods are safer in the evenings to help in her decision on particular hotels. Brenda lives in Point Grey and doesn't quite know what to expect so she is interested in [exploring] what type of crime can be expected near her company's office. Brenda uses the Boston Criminal Incident Shiny application and is able to filter based the type of incident, the month she will be travelling and segregate the time she will be commuting from the office to the hotel.  Brenda wishes to stay in a hotel near the Charles River, however, she notices that during the times where she would be traveling back to the hotel there is an elevated number of theft incidents and instead decides on a hotel closer to the office to limit her commute time and distance. She makes note that assault crimes are far more prominent in the neighbourhood where her office resides and decides that she will purchase some pepper spray as a precaution when she arrives in Boston.
+Next month, Brenda, a Vancouver local, will be taking a business trip to Boston. She will be staying for 5 days and is curious about what precautions she should take before traveling.  Brenda wants to [compare] which neighbourhoods are safer in the evenings to help in her decision on particular hotels. Brenda lives in Point Grey and doesn't quite know what to expect so she is interested in [exploring] what type of crime can be expected near her company's office. Brenda uses the Boston Criminal Incident Shiny application and is able to filter based on the type of incident, the month she will be travelling. She can select an exact date of criminal activities from between the years 2015-2018.  Brenda wishes to stay in a hotel near the Charles River, however, she notices that during the times where she would be traveling back to the hotel there is an elevated number of theft incidents and instead decides on a hotel closer to the office to limit her commute time and distance. She makes note that assault crimes are far more prominent in the neighbourhood where her office resides and decides that she will purchase some pepper spray as a precaution when she arrives in Boston.
