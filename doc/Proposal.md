@@ -44,6 +44,5 @@ Brenda lives in Point Grey and doesn't quite know what to expect so she is inter
 
 This shiny application will contain 2 interactive graphics directed from a landing page. The main panel will contain a map of Boston, Massachusetts split between municipal districts and a bar chart below it.  The user has a choice of several filtering options all located on the side panel dashboard. They have the option to select data from a range of years between 2015 and 2018 by using a slider range bar. The specific severity of crime can then be selected or left at a default setting of  "All" by means of a dropdown menu.   The user can also filter the data by the month, calendar day, or day of the week, giving  more flexibility and precision. Radio buttons are provided giving the ability to refine the data further by neighbourhood. Using the selected parameter, the map will colour code the frequency of the specified incident(s) of all the city's districts. The color bar legend at the bottom of the screen informs the user on the magnitude. Hovering over a specific district on the map will expand the statistics and rank of that particular neighborhood in comparison to others. The bar chart beneath the map depicts a 24-hour clock displaying the frequency per hour of the specified incident for the neighbourhood selected in the side panel. 
 
-![]("../img/proposal_sketch.png")
-
+![sketch](https://github.com/hfboyce/DSCI_532-boston-crime-rate/blob/master/img/proposal_sketch.png)
 ###### Figure 1: Sketch proposal for final shiny application 
