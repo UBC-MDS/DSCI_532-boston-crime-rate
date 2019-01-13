@@ -9,7 +9,7 @@ The development of a shiny app using the city of Boston's crime rate.
 
 ## Included in this repo: 
 
-- Milestone1: Proposal
+- Milestone 1: [Proposal](https://github.com/hfboyce/DSCI_532-boston-crime-rate/blob/master/doc/Proposal.md)
 
 
 # Releases:
