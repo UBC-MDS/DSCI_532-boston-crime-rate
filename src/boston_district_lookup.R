@@ -15,7 +15,6 @@ lookup <- tribble(
 )
 
 tmp <- crime %>%
-  # select(DISTRICT, OFFENSE_CODE_GROUP) %>%
   left_join(lookup) %>%
   group_by(NAME, OFFENSE_CODE_GROUP) %>%
   filter(OFFENSE_CODE_GROUP == "Homicide") %>%
