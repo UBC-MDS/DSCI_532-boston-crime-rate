@@ -3,7 +3,7 @@ library(tidyverse)
 library(leaflet)
 library(rgdal)
 library(lubridate)
-library("shinythemes")
+library(shinythemes)
 library(shinyWidgets)
 
 # Load data
@@ -11,17 +11,14 @@ boston_data <- readOGR('new_shp/shape_with_data.shp')
 boston_no_data <- readOGR("new_shp/shape_no_data.shp")
 crime <- read_csv('data/crime_cleaned.csv')
 
-
 # Vector of choices
 crime_choices <- sort(unique(crime$OFFENSE_CODE_GROUP))
 
 month_choices <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
-# day_choices <-  unique(crimes$DAY)
 weekday_choices <- c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" )
 
 neighbourhood_choices <- sort(unique(crime$NEIGHBOURHOOD))
-
 
 day_choices <- sort(unique(crime$DAY))
 
@@ -34,8 +31,8 @@ ui <- fluidPage(theme = shinytheme("slate"),themeSelector(),
 
     sidebarLayout(
         sidebarPanel(
-          sliderInput("yearFiltered", label = "Years", min = 2015,
-                      max = 2018, value = c(2015, 2018, 1), sep = ""),
+          # sliderInput("yearFiltered", label = "Years", min = 2015,
+          #             max = 2018, value = c(2015, 2018, 1), sep = ""),
           pickerInput("crimeFiltered", label = h3("Type of Crime:"),
                         choices = crime_choices,  options = list(`actions-box` = TRUE),multiple = TRUE, selected = crime_choices ),
           pickerInput("monthFiltered", label = h3("Month:"),
@@ -50,7 +47,8 @@ ui <- fluidPage(theme = shinytheme("slate"),themeSelector(),
         mainPanel(
 
            leafletOutput("mymap", height = "700px", width = "100%"),
-           dataTableOutput("table")
+           # dataTableOutput("table"),
+           plotOutput("hour_data")
 
         )
     )
@@ -65,6 +63,17 @@ server <- function(input, output) {
             group_by(NAME, OFFENSE_CODE_GROUP) %>%
             count()
         )
+    
+    crime_filtered1 <- reactive({
+      crime %>% filter( YEAR <= input$yearFiltered[2], 
+                        YEAR >= input$yearFiltered[1],  
+                        OFFENSE_CODE_GROUP %in% input$crimeFiltered,
+                        MONTH_NAME %in%  input$monthFiltered, 
+                        DAY <= input$dayFiltered[2], 
+                        DAY >=  input$dayFiltered[1],
+                        DAY_OF_WEEK %in% input$weekFiltered,
+                        NEIGHBOURHOOD == input$NeighbourhoodsFiltered )
+    })
 
     boston_filtered <- reactive(
         delete <- merge(boston_data, crime_filtered(), by.x="Name", by.y="NAME")
@@ -88,15 +97,16 @@ server <- function(input, output) {
             addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
             addLegend(title = "Boston Crime Density <br> 2015 - 2017", pal = colorNumeric('viridis', domain = boston_filtered()@data$n), values = boston_filtered()@data$n)
     })
-      output$hour_data <- renderPlot({
-        crime_filtered() %>% ggplot(aes(x=HOUR)) +
+    
+    output$hour_data <- renderPlot({
+        crime_filtered1() %>% ggplot(aes(x=HOUR)) +
           geom_bar(stat = "count", fill = "darkcyan") +
           labs(y = "Frequency", title = "Incidents by the Hour") +
           theme_classic() +
           scale_x_continuous(limits=c(0, 23), breaks=seq(0,23,1))
 
-
     })
+      
 
 }
 
