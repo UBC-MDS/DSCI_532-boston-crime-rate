@@ -6,7 +6,7 @@ library(rgdal)
 # Load data
 boston_data <- readOGR('new_shp/shape_with_data.shp')
 boston_no_data <- readOGR("new_shp/shape_no_data.shp")
-crime <- read_csv('data/crime_cleaned.csv')
+crime <- read_csv('data/crime_cleaned2.csv')
 
 # Create lookup table so we can join data
 lookup <- tribble(
@@ -26,7 +26,7 @@ lookup <- tribble(
 )
 
 # Vector of choices
-choices <- unique(crime$OFFENSE_CODE_GROUP)
+choices <- sort(unique(crime$OFFENSE_CODE_GROUP))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
