@@ -6,7 +6,7 @@ library(rgdal)
 # Load data
 boston_data <- readOGR('new_shp/shape_with_data.shp')
 boston_no_data <- readOGR("new_shp/shape_no_data.shp")
-crime <- read_csv('data/records/crime.csv')
+crime <- read_csv('data/crime_cleaned.csv')
 
 # Create lookup table so we can join data
 lookup <- tribble(
@@ -25,13 +25,6 @@ lookup <- tribble(
     "E18", "Hyde Park"
 )
 
-# We need to filter the data before we join.
-tmp <- crime %>%
-    left_join(lookup, by = c("DISTRICT" = "DISTRICT")) %>%
-    group_by(NAME, OFFENSE_CODE_GROUP) %>%
-    filter(OFFENSE_CODE_GROUP == "Homicide") %>%
-    count()
-
 # Vector of choices
 choices <- unique(crime$OFFENSE_CODE_GROUP)
 
@@ -48,7 +41,8 @@ ui <- fluidPage(
                         choices = choices)
         ),
         mainPanel(
-           leafletOutput("mymap", height = "700px", width = "100%")
+           leafletOutput("mymap", height = "700px", width = "100%"),
+           dataTableOutput("table")
         )
     )
 )
@@ -58,14 +52,32 @@ server <- function(input, output) {
     
     crime_filtered <- reactive(
         crime %>%
-            filter(OFFENSE_CODE_GROUP == crimeFiltered[1])
+            filter(OFFENSE_CODE_GROUP == input$crimeFiltered) %>%
+            group_by(NAME, OFFENSE_CODE_GROUP) %>%
+            count()
+        )
+    
+    boston_filtered <- reactive(
+        delete <- merge(boston_data, crime_filtered(), by.x="Name", by.y="NAME")
     )
+    
+    color_palette <- reactive({
+        delete_this <- boston_filtered()@data
+        
+        colorNumeric("viridis", domain = delete_this$n)
+    })
+
+    output$table <- renderDataTable(boston_filtered()@data)
 
     output$mymap <- renderLeaflet({
+        
+        pal <- color_palette()
+        
         leaflet() %>%
-            # addProviderTiles(providers$CartoDB.Positron) %>%
-            addPolygons(data = boston_data, weight = 1, fillColor = "red") %>%
-            addPolygons(data = boston_no_data, weight = 1)
+            addProviderTiles(providers$CartoDB.Positron) %>%
+            addPolygons(data = boston_filtered(), weight = 1, color = "white", fillColor = ~pal(boston_filtered()@data$n), fillOpacity = 0.65) %>%
+            addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
+            addLegend(title = "Boston Crime Density <br> 2015 - 2017", pal = colorNumeric('viridis', domain = boston_filtered()@data$n), values = boston_filtered()@data$n) 
     })
 }
 
