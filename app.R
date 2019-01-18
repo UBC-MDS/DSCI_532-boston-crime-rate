@@ -8,9 +8,9 @@ library(rsconnect)
 
 
 # Load data
-boston_data <- readOGR('new_shp/shape_with_data.shp')
-boston_no_data <- readOGR("new_shp/shape_no_data.shp")
-crime <- read_csv('data/crime_cleaned2.csv')
+boston_data <- readOGR('data/shapefile/shape_with_data.shp')
+boston_no_data <- readOGR("data/shapefile/shape_no_data.shp")
+crime <- read_csv('data/records/crime_cleaned.csv')
 
 # Create lookup table so we can join data
 
