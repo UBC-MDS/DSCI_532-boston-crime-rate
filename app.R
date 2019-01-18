@@ -16,7 +16,6 @@ crime <- read_csv('data/crime_cleaned2.csv')
 
 # Vector of choices
 crime_choices <- sort(unique(crime$OFFENSE_CODE_GROUP))
-
 month_choices <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
 weekday_choices <- c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" )
