@@ -74,10 +74,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
                     pickerInput("weekFiltered", label = h3(" Day of The Week:"),
                                 choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices )),
                mainPanel(
-                 leafletOutput("mymap", height = "600px", width = "100%")))),
+                 leafletOutput("mymap", height = "700px", width = "100%")))),
 
 #Tab 2 for bar chart with seperate sliders     
-      tabPanel("Hourly incident graph", 
+      tabPanel("Hourly Incident Graph", 
                sidebarLayout(
                  sidebarPanel(
                    pickerInput("crimeFiltered_c", label = h3("Type of Crime:"),
