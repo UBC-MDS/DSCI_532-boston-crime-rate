@@ -8,9 +8,9 @@ library(rsconnect)
 
 
 # Load data
-boston_data <- readOGR('new_shp/shape_with_data.shp')
-boston_no_data <- readOGR("new_shp/shape_no_data.shp")
-crime <- read_csv('data/crime_cleaned2.csv')
+boston_data <- readOGR('data/shapefile/shape_with_data.shp')
+boston_no_data <- readOGR("data/shapefile/shape_no_data.shp")
+crime <- read_csv('data/records/crime_cleaned.csv')
 
 # Create lookup table so we can join data
 
@@ -24,28 +24,43 @@ neighbourhood_choices <- sort(unique(crime$NAME))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(theme = shinytheme("cosmo"),
-                
-                # Application title
-                titlePanel("Boston Crime"),
-                
-                # Sidebar with a slider input for number of bins 
-                sidebarLayout(
-                  sidebarPanel(
+  
+  # Application title
+  titlePanel("Boston Crime"),
+  
+  # Sidebar with a slider input for number of bins 
+  
+  navbarPage("Boston Criminal Incidence data",
+    tabPanel("Boston Neighhourhood Map",
+             sidebarLayout(
+               sidebarPanel(
                     pickerInput("crimeFiltered", label = h3("Type of Crime:"),
                                 choices = crime_choices,  options = list(`actions-box` = TRUE),multiple = TRUE, selected = crime_choices ),
                     pickerInput("monthFiltered", label = h3("Month:"),
                                 choices = month_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = month_choices),
                     pickerInput("weekFiltered", label = h3(" Day of The Week:"),
-                                choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices ),
-                    pickerInput("NeighbourhoodsFiltered", label = h3("Boston Neighbourhoods:"),
-                                choices = neighbourhood_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = neighbourhood_choices  )
-                  ),
-                  mainPanel(
-                    leafletOutput("mymap", height = "600px", width = "100%"),
-                    plotOutput("hour_data", width = "100%")
-                  )
-                )
-)
+                                choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices )),
+               mainPanel(
+                 leafletOutput("mymap", height = "600px", width = "100%")))),
+    
+      tabPanel("Boston Neighhourhood Frequency by Hour", 
+               sidebarLayout(
+                 sidebarPanel(
+                   pickerInput("crimeFiltered_c", label = h3("Type of Crime:"),
+                               choices = crime_choices,  options = list(`actions-box` = TRUE),multiple = TRUE, selected = crime_choices ),
+                   pickerInput("monthFiltered_c", label = h3("Month:"),
+                               choices = month_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = month_choices),
+                   pickerInput("weekFiltered_c", label = h3(" Day of The Week:"),
+                               choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices ),
+                   pickerInput("NeighbourhoodsFiltered_c", label = h3("Boston Neighbourhoods:"),
+                               choices = neighbourhood_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = neighbourhood_choices)),
+                 mainPanel(
+                   plotOutput("hour_data", width = "100%")))))
+)   
+    
+
+
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -61,10 +76,10 @@ server <- function(input, output) {
   
   crime_filtered2 <- reactive(
     crime %>%
-      filter(OFFENSE_CODE_GROUP %in% input$crimeFiltered, 
-             MONTH_NAME %in%  input$monthFiltered, 
-             DAY_OF_WEEK %in% input$weekFiltered, 
-             NAME %in% input$NeighbourhoodsFiltered) 
+      filter(OFFENSE_CODE_GROUP %in% input$crimeFiltered_c, 
+             MONTH_NAME %in%  input$monthFiltered_c, 
+             DAY_OF_WEEK %in% input$weekFiltered_c, 
+             NAME %in% input$NeighbourhoodsFiltered_c) 
   )
   
   boston_filtered <- reactive(
@@ -103,7 +118,6 @@ server <- function(input, output) {
     
   })
 }
-
+ 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
