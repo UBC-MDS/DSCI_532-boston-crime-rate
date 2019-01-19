@@ -22,8 +22,8 @@ Based on our proposal the task in which we attempted to achieve in this Mileston
 * **Build Graph:** 
     * Create a plot that shows the user the frequency (histogram) of crime occurring during the selected months, in the specified neighbourhoods. 
     
-* **multi-select filtering:** 
-    *After getting feedback from our TA, we agreed with his suggest to have multi-selection options for the type of crime. This prove, slightly more difficult than anticipated however all filtering of the data is in perfect working order. 
+* **multi-select filtering:**    
+    * After getting feedback from our TA, we agreed with his suggest to have multi-selection options for the type of crime. This prove, slightly more difficult than anticipated however all filtering of the data is in perfect working order. 
 
 
 ## Vision & Next Steps
