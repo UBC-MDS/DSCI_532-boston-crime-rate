@@ -125,10 +125,10 @@ server <- function(input, output) {
   boston_filtered <- reactive(
     delete <- merge(boston_data, crime_filtered(), by.x="Name", by.y="NAME"))
   
-  # color_palette <- reactive({
-  #   delete_this <- boston_filtered()@data
-  #   
-  #   colorNumeric("viridis", domain = delete_this$n)})
+  color_palette <- reactive({
+    delete_this <- boston_filtered()@data
+
+    colorNumeric("viridis", domain = delete_this$n)})
   
   output$table <- renderDataTable(boston_filtered()@data)
   
