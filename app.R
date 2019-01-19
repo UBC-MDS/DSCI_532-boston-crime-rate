@@ -5,6 +5,7 @@ library(rgdal)
 library(shinythemes)
 library(shinyWidgets)
 library(rsconnect)
+library(shinyjs)
 
 
 # Load data
@@ -22,15 +23,47 @@ weekday_choices <- c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 
 neighbourhood_choices <- sort(unique(crime$NAME))
 
-# Define UI for application that draws a histogram
-ui <- fluidPage(theme = shinytheme("cosmo"),
+
+appCSS <- "
+#loading-content {
+position: absolute;
+background: #000000;
+opacity: 0.9;
+z-index: 100;
+left: 0;
+right: 0;
+height: 100%;
+text-align: center;
+color: #FFFFFF;
+}
+"
+
+
+#nClose on click feature
+jscode <- "shinyjs.closeWindow = function() { window.close(); }"
+
+
+# Define UI for application that draws a map and barchart 
+
+ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
+                inlineCSS(appCSS),extendShinyjs(text = jscode, functions = c("closeWindow")),
+                actionButton("close", "Close window"),  
+                
+  # Loading message
+        div(
+          id = "loading-content",
+          h2("Loading...")
+        ),              
   
   # Application title
   titlePanel("Boston Crime"),
   
-  # Sidebar with a slider input for number of bins 
+  # Sidebar with a slider input for 2 tabs and 4 slides 
   
+#N avigation bar
   navbarPage("Boston Criminal Incidence data",
+             
+# Tab 1 for map             
     tabPanel("Boston Neighhourhood Map",
              sidebarLayout(
                sidebarPanel(
@@ -42,7 +75,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                 choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices )),
                mainPanel(
                  leafletOutput("mymap", height = "600px", width = "100%")))),
-    
+
+#Tab 2 for bar chart with seperate sliders     
       tabPanel("Boston Neighhourhood Frequency by Hour", 
                sidebarLayout(
                  sidebarPanel(
@@ -62,9 +96,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
 
 
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw a map and barchart 
 server <- function(input, output) {
   
+  # Simulate work being done for 1 second this is for the loading screen
+  Sys.sleep(1)
+ 
+  
+#  Filtering for map   
   crime_filtered <- reactive(
     crime %>%
       filter(OFFENSE_CODE_GROUP %in%input$crimeFiltered, 
@@ -73,7 +112,8 @@ server <- function(input, output) {
       group_by(NAME) %>%
       count()
   )
-  
+
+# Filter for barchart   
   crime_filtered2 <- reactive(
     crime %>%
       filter(OFFENSE_CODE_GROUP %in% input$crimeFiltered_c, 
@@ -92,7 +132,10 @@ server <- function(input, output) {
   
   output$table <- renderDataTable(boston_filtered()@data)
   
-  output$mymap <- renderLeaflet({
+ 
+  # Map output using leaflet   
+
+   output$mymap <- renderLeaflet({
     
     pal <- color_palette()
     
@@ -102,7 +145,8 @@ server <- function(input, output) {
       addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
       addLegend(title = "Boston Crime Density <br> 2015 - 2017", pal = colorNumeric('viridis', domain = boston_filtered()@data$n), values = boston_filtered()@data$n) 
   })
-  
+
+# Plot output  for bar chart 
   output$hour_data <- renderPlot({
     
     crime_filtered2() %>%
@@ -116,6 +160,17 @@ server <- function(input, output) {
       scale_x_continuous(limits=c(0, 23), breaks=seq(0,23,1))
     
     
+  })
+  
+  # Hide the loading message when the rest of the server function has executed
+  hide(id = "loading-content", anim = TRUE, animType = "fade")    
+  show("app-content")
+  
+  
+  # Exit window
+  observeEvent(input$close, {
+    js$closeWindow()
+    stopApp()
   })
 }
  
