@@ -61,10 +61,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
   # Sidebar with a slider input for 2 tabs and 4 slides 
   
 #N avigation bar
-  navbarPage("Boston Criminal Incidence data",
+  navbarPage("Menu options",
              
 # Tab 1 for map             
-    tabPanel("Boston Neighhourhood Map",
+    tabPanel("Neighhourhood Map",
              sidebarLayout(
                sidebarPanel(
                     pickerInput("crimeFiltered", label = h3("Type of Crime:"),
@@ -77,7 +77,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
                  leafletOutput("mymap", height = "600px", width = "100%")))),
 
 #Tab 2 for bar chart with seperate sliders     
-      tabPanel("Boston Neighhourhood Frequency by Hour", 
+      tabPanel("Hourly incident graph", 
                sidebarLayout(
                  sidebarPanel(
                    pickerInput("crimeFiltered_c", label = h3("Type of Crime:"),
