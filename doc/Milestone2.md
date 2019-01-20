@@ -54,7 +54,7 @@ Moving onto the second tab labelled "Hourly Incident Graph", you get to this lan
 
 ![](../img/milestone_screenshots/screen_shot_landg.png) 
 
-The this tab has a similar functionality, however now you there is an additional function to filter by any particular neighbourhoods. 
+This tab has a similar functionality, however now you there is an additional function to filter by any particular neighbourhoods. 
 
 ![](../img/milestone_screenshots/screen_shot_crimgfilt.png) ![](../img/milestone_screenshots/screen_shot_monthgfilt.png) ![](../img/milestone_screenshots/screen_shot_neighbourgfilt.png)
 
