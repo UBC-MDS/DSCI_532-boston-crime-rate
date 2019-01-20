@@ -59,7 +59,7 @@ The this tab has a similar functionality, however now you there is an additional
 ![](../img/milestone_screenshots/screen_shot_crimgfilt.png) ![](../img/milestone_screenshots/screen_shot_monthgfilt.png) ![](../img/milestone_screenshots/screen_shot_neighbourgfilt.png)
 
 
-To finish your session you can close your session using the "x" in the top left side of the screen. 
+To finish your session you can close your session using the "Close Window" in the top left side of the screen. 
 
 ![](../img/milestone_screenshots/screen_shot_end.png)
 
