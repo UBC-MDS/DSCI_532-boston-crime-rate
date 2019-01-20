@@ -1,11 +1,5 @@
 # Milestone 2
 
-## Functionality:
-
-
-
-
-
 ## Rationale
 
 Visualizing large amounts of data can often be difficult and confusing.  While we were conceptualizing our application, we decided to use a map because it is very easy to understand and interpret what is going on. By providing the user with some flexibility through filtering and manipulating the data, it allows them to answer specific questions pertaining to crime rates within the municipality of Boston. Leaflet was used to access a base map, and shapefile polygons were layered on top to allow the user to identify Boston’s different district boundaries.  This allows the user to visually compare and contrast the crime frequency by neighbourhood by means of a colour palette. The second tab, “Hourly Incident Graph”, lets the user dig a little deeper in their analysis an see the particular crime frequency per hour of specific neighbourhoods. We used a specific type of select menu for versatility and precision.
@@ -23,9 +17,51 @@ Based on our proposal the task in which we attempted to achieve in this Mileston
 * **Build Graph:**
     * Create a plot that shows the user the frequency (histogram) of crime occurring during the selected months, in the specified neighbourhoods.
 
-* **multi-select filtering:**    
+* **Multi-select filtering:**    
     * After getting feedback from our TA, we agreed with his suggest to have multi-selection options for the type of crime. This prove, slightly more difficult than anticipated however all filtering of the data is in perfect working order.
 
+
+## Functionality 
+
+Often opening the shiny apps can take a bit of time so we added convinient feature that shows the page is loading, so it limits the users potential frustration. 
+
+![](../img/milestone_screenshots/screen_shot_load.png)
+
+
+Once The page is loaded the user will see this landing page.
+      
+![](../img/milestone_screenshots/screen_shot_land.png)
+
+
+The app has a navigation bar to select the type of visualization whether it be the main page displaying the map or the second tab displaying a graph
+      
+
+![](../img/milestone_screenshots/screen_shot_navpanel.png)
+
+
+Below are the multiple ways of filtering the data of the map using the different types of crime, the month, and the day of the week. 
+      
+![](../img/milestone_screenshots/screen_shot_bar.png)
+
+
+![](../img/milestone_screenshots/screen_shot_crimefilter.png) ![](../img/milestone_screenshots/screen_shot_monthfilter.png) ![](../img/milestone_screenshots/screen_shot_weekfilter.png)
+
+
+Following The filtering of the map you will see the colours of the neighbourhoods change and the legend adjusts to the new scale of crimes. 
+
+Moving onto the second tab labelled "Hourly Incident Graph", you get to this landing page.
+
+
+![](../img/milestone_screenshots/screen_shot_landg.png) 
+
+The this tab has a similar functionality, however now you there is an additional function to filter by any particular neighbourhoods. 
+
+![](../img/milestone_screenshots/screen_shot_crimgfilt.png) ![](../img/milestone_screenshots/screen_shot_monthgfilt.png) ![](../img/milestone_screenshots/screen_shot_neighbourgfilt.png)
+
+
+To finish your session you can close your session using the "Close Window" in the top left side of the screen. 
+
+![](../img/milestone_screenshots/screen_shot_end.png)
 
 ## Vision & Next Steps
 
@@ -43,3 +79,8 @@ In addition to these goals, we believe there is still a lot of work to do on the
 
 * Currently, when you deselect every feature on a filter, an error is displayed in the main panel and no map is outputted. An empty graph is displayed when no selection is chosen for any of the features. We are hoping to add a mandatory “at least one” function to prohibit an empty selection on a filter.
 * We have added a “close window feature” which will close the app however not the window. I believe this could be a browser issue. Fixing this or removing this feature will be on the task list for milestone 3.
+
+
+## Ammendments
+
+Our app design has definitely changed since our proposal. We have added multi-select filtering for all of our filtering options and took out "day" filtering. This was due to the fact that our data was not conducive to such precise selections. We decided on adding two tabs. We felt that having an additional selection for "neighbourhood" on the same panel as the map was a little confusing since this filter will not affect the map and only the graph.  Our app does not include the hover features yet as we said in our proposal but we are hoping to implement this in the next milestone.
