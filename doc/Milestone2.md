@@ -81,6 +81,6 @@ In addition to these goals, we believe there is still a lot of work to do on the
 * We have added a “close window feature” which will close the app however not the window. I believe this could be a browser issue. Fixing this or removing this feature will be on the task list for milestone 3.
 
 
-# Ammendments
+## Ammendments
 
-Our app design has definitely changed since our proposal. We have added multi-select filtering for all of our filtering options and took out "day" filtering. This was purely due to the fact we did not have enough data to display with such precise selections. We decided on adding 2 different tabs. We felt that having an additional selection for "neighbourhood" on the same panel as the map a little confusing since this filter will not affect the map and only the graph. Our app does not include the hover features yet as we said in our proposal but we are hoping to implement this in the next milestone.    
+Our app design has definitely changed since our proposal. We have added multi-select filtering for all of our filtering options and took out "day" filtering. This was due to the fact that our data was not conducive to such precise selections. We decided on adding two tabs. We felt that having an additional selection for "neighbourhood" on the same panel as the map was a little confusing since this filter will not affect the map and only the graph.  Our app does not include the hover features yet as we said in our proposal but we are hoping to implement this in the next milestone.
