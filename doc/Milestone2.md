@@ -1,10 +1,5 @@
 # Milestone 2 
 
-## Functionality:
-
-
-
-
 
 ## Rationale
 
@@ -24,6 +19,13 @@ Based on our proposal the task in which we attempted to achieve in this Mileston
     
 * **multi-select filtering:**    
     * After getting feedback from our TA, we agreed with his suggest to have multi-selection options for the type of crime. This prove, slightly more difficult than anticipated however all filtering of the data is in perfect working order. 
+
+
+## Functionality:
+
+
+
+
 
 
 ## Vision & Next Steps
