@@ -232,7 +232,7 @@ server <- function(input, output) {
                          breaks = seq(0, 23), labels = seq(0,23))  +
       ylab("Frequency") +
       xlab("Time (Hour)") +
-      theme_classic() + theme(plot.title = element_text(size=26),
+      theme_minimal() + theme(plot.title = element_text(size=26),
                               axis.text.x = element_text(size = 14),
                               axis.text.y = element_text( size = 14),
                               axis.title=element_text(size=18),
