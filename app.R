@@ -1,4 +1,4 @@
-# LIBRARIES =================================================================================================================================================================================
+# LIBRARIES ================================================================================================================================================================================
 
 library(shiny)
 library(tidyverse)
@@ -11,7 +11,7 @@ library(shinyjs)
 library(jcolors)
 
 
-# LOAD DATA =================================================================================================================================================================================
+# LOAD DATA ================================================================================================================================================================================
 
 ## Load Shapefiles
 boston_data <- readOGR('data/shapefile/shape_with_data.shp')
@@ -21,7 +21,7 @@ boston_no_data <- readOGR("data/shapefile/shape_no_data.shp")
 crime <- read_csv('data/records/crime_cleaned.csv')
 
 
-# CREATE VECTORS FOR SELECTION IN SHINY WIDGETS =============================================================================================================================================
+# CREATE VECTORS FOR SELECTION IN SHINY WIDGETS ============================================================================================================================================
 
 ## Vector of choices
 crime_choices <- sort(unique(crime$OFFENSE_CODE_GROUP))
@@ -47,7 +47,7 @@ weekday_choices <- c( "Monday",
 neighbourhood_choices <- sort(unique(crime$NAME))
 
 
-# CREATE LOADING SCREEN =====================================================================================================================================================================
+# CREATE LOADING SCREEN ====================================================================================================================================================================
 appCSS <- "
 #loading-content {
 position: absolute;
@@ -62,6 +62,8 @@ color: #FFFFFF;
 }
 "
 
+# ADD JS CLOSE ON CLICK FEATURE ============================================================================================================================================================
+jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 
 # DEFINE UI FOR APP.  WILL DISPLAY MAP AND BAR CHART ========================================================================================================================================
 
@@ -141,7 +143,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
 
 
 
-# DEFINE SERVER FOR APP.  APPLYS FILTERING MECHANISMS TO MAP AND BAR CHART PROJECTIONS ======================================================================================================
+# DEFINE SERVER FOR APP.  APPLYS FILTERING MECHANISMS TO MAP AND BAR CHART PROJECTIONS =====================================================================================================
 
 server <- function(input, output) {
   
@@ -207,8 +209,13 @@ server <- function(input, output) {
       addPolygons(data = boston_filtered(), 
                   weight = 1, color = "white",
                   fillColor = ~pal(boston_filtered()@data$n), 
-                  fillOpacity = 0.65) %>%
-      addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
+                  fillOpacity = 0.65,
+                  label = boston_filtered()@data$Name,
+                  highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
+                  popup = paste0(boston_filtered()@data$Name, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
+      addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray", label = ~Name, 
+                  highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
+                  popup = paste0(boston_no_data@data$Name, "<br>Missing Data.")) %>%
       addLegend(title = "Boston Crime Density <br> 2015 - 2017", 
                 pal = colorNumeric( "viridis", domain = boston_filtered()@data$n), 
                 values = boston_filtered()@data$n) 
@@ -243,5 +250,5 @@ server <- function(input, output) {
   
 }
 
-# RUN APPLICATION ===========================================================================================================================================================================
+# RUN APPLICATION ==========================================================================================================================================================================
 shinyApp(ui = ui, server = server)
