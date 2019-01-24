@@ -8,6 +8,7 @@ library(shinythemes)
 library(shinyWidgets)
 library(rsconnect)
 library(shinyjs)
+library(jcolors)
 
 
 # LOAD DATA ================================================================================================================================================================================
@@ -24,8 +25,25 @@ crime <- read_csv('data/records/crime_cleaned.csv')
 
 ## Vector of choices
 crime_choices <- sort(unique(crime$OFFENSE_CODE_GROUP))
-month_choices <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
-weekday_choices <- c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" )
+month_choices <- c("January", 
+                   "February",
+                   "March",
+                   "April", 
+                   "May", 
+                   "June", 
+                   "July", 
+                   "August",
+                   "September",
+                   "October", 
+                   "November", 
+                   "December")
+weekday_choices <- c( "Monday",
+                      "Tuesday",
+                      "Wednesday", 
+                      "Thursday", 
+                      "Friday",
+                      "Saturday", 
+                      "Sunday" )
 neighbourhood_choices <- sort(unique(crime$NAME))
 
 
@@ -45,14 +63,17 @@ color: #FFFFFF;
 "
 
 
+<<<<<<< HEAD
 # ADD JS CLOSE ON CLICK FEATURE ============================================================================================================================================================
 jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 
 # DEFINE UI FOR APP.  WILL DISPLAY MAP AND BAR CHART =======================================================================================================================================
+=======
+# DEFINE UI FOR APP.  WILL DISPLAY MAP AND BAR CHART ========================================================================================================================================
+>>>>>>> b4afce3771b172fc4f49b9a8fe3730baa2300268
 
 ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
-                inlineCSS(appCSS),extendShinyjs(text = jscode, functions = c("closeWindow")),
-                actionButton("close", "Close window"),  
+                inlineCSS(appCSS), 
                 
                 # Loading message
                 div(
@@ -66,18 +87,30 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
                 # Sidebar with a slider input for 2 tabs and 4 slides 
                 
                 #N avigation bar
-                navbarPage("Menu options",
+                navbarPage( "",
                            
                            # Tab 1 for map             
-                           tabPanel("Neighhourhood Map",
+                           tabPanel("Neighbourhood Map",
                                     sidebarLayout(
                                       sidebarPanel(
-                                        pickerInput("crimeFiltered", label = h3("Type of Crime:"),
-                                                    choices = crime_choices,  options = list(`actions-box` = TRUE),multiple = TRUE, selected = crime_choices ),
-                                        pickerInput("monthFiltered", label = h3("Month:"),
-                                                    choices = month_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = month_choices),
-                                        pickerInput("weekFiltered", label = h3(" Day of The Week:"),
-                                                    choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices )),
+                                        pickerInput("crimeFiltered", 
+                                                    label = h3("Type of Crime:"),
+                                                    choices = crime_choices,
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE,
+                                                    selected = crime_choices ),
+                                        pickerInput("monthFiltered", 
+                                                    label = h3("Month:"),
+                                                    choices = month_choices,
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE, 
+                                                    selected = month_choices),
+                                        pickerInput("weekFiltered",
+                                                    label = h3(" Day of The Week:"),
+                                                    choices = weekday_choices, 
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE, 
+                                                    selected = weekday_choices )),
                                       mainPanel(
                                         leafletOutput("mymap", height = "700px", width = "100%")))),
                            
@@ -85,16 +118,32 @@ ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
                            tabPanel("Hourly Incident Graph", 
                                     sidebarLayout(
                                       sidebarPanel(
-                                        pickerInput("crimeFiltered_c", label = h3("Type of Crime:"),
-                                                    choices = crime_choices,  options = list(`actions-box` = TRUE),multiple = TRUE, selected = crime_choices ),
-                                        pickerInput("monthFiltered_c", label = h3("Month:"),
-                                                    choices = month_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = month_choices),
-                                        pickerInput("weekFiltered_c", label = h3(" Day of The Week:"),
-                                                    choices = weekday_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = weekday_choices ),
-                                        pickerInput("NeighbourhoodsFiltered_c", label = h3("Boston Neighbourhoods:"),
-                                                    choices = neighbourhood_choices, options = list(`actions-box` = TRUE), multiple = TRUE, selected = neighbourhood_choices)),
+                                        pickerInput("crimeFiltered_c",
+                                                    label = h3("Type of Crime:"),
+                                                    choices = crime_choices, 
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE, 
+                                                    selected = crime_choices ),
+                                        pickerInput("monthFiltered_c", 
+                                                    label = h3("Month:"),
+                                                    choices = month_choices, 
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE,
+                                                    selected = month_choices),
+                                        pickerInput("weekFiltered_c", 
+                                                    label = h3(" Day of The Week:"),
+                                                    choices = weekday_choices,
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE, 
+                                                    selected = weekday_choices ),
+                                        pickerInput("NeighbourhoodsFiltered_c",
+                                                    label = h3("Boston Neighbourhoods:"),
+                                                    choices = neighbourhood_choices,
+                                                    options = list(`actions-box` = TRUE),
+                                                    multiple = TRUE, 
+                                                    selected = neighbourhood_choices)),
                                       mainPanel(
-                                        plotOutput("hour_data", width = "100%")))))
+                                        plotOutput("hour_data", height = "700px", width = "100%")))))
 )   
 
 
@@ -108,23 +157,38 @@ server <- function(input, output) {
   
   
   #  Filtering for map   
-  crime_filtered <- reactive(
+  crime_filtered <- reactive({
+    validate(
+      need(input$crimeFiltered != "", "Please select at least one crime"),
+      need(input$monthFiltered %in% month_choices, "Please select at least one month"),
+      need(input$weekFiltered %in% weekday_choices , "Please select at least one day of the week")
+      
+    )
+    
     crime %>%
-      filter(OFFENSE_CODE_GROUP %in%input$crimeFiltered, 
+      filter(OFFENSE_CODE_GROUP %in% input$crimeFiltered, 
              MONTH_NAME %in%  input$monthFiltered, 
              DAY_OF_WEEK %in% input$weekFiltered ) %>%
       group_by(NAME) %>%
       count()
-  )
+  })
   
   # Filter for barchart   
-  crime_filtered2 <- reactive(
+  crime_filtered2 <- reactive({
+    validate(
+      need(input$crimeFiltered_c != "", "Please select at least one crime"),
+      need(input$monthFiltered_c %in% month_choices, "Please select at least one month"),
+      need(input$weekFiltered_c %in% weekday_choices , "Please select at least one day of the week"),
+      need(input$NeighbourhoodsFiltered_c %in% neighbourhood_choices , "Please select at least one neighbourhood")
+    )
+    
+    
     crime %>%
       filter(OFFENSE_CODE_GROUP %in% input$crimeFiltered_c, 
              MONTH_NAME %in%  input$monthFiltered_c, 
              DAY_OF_WEEK %in% input$weekFiltered_c, 
              NAME %in% input$NeighbourhoodsFiltered_c) 
-  )
+  })
   
   # Merge filtered data to shapefile
   boston_filtered <- reactive(
@@ -134,7 +198,7 @@ server <- function(input, output) {
   color_palette <- reactive({
     domain <- boston_filtered()@data
     
-    colorNumeric("viridis", domain = domain$n)})
+    colorNumeric( "viridis", domain = domain$n)})
   
   # If we want to include a table somewhere, uncomment this line
   # output$table <- renderDataTable(boston_filtered()@data)
@@ -147,23 +211,34 @@ server <- function(input, output) {
     
     leaflet() %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
-      addPolygons(data = boston_filtered(), weight = 1, color = "white", fillColor = ~pal(boston_filtered()@data$n), fillOpacity = 0.65) %>%
+      addPolygons(data = boston_filtered(), 
+                  weight = 1, color = "white",
+                  fillColor = ~pal(boston_filtered()@data$n), 
+                  fillOpacity = 0.65) %>%
       addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
-      addLegend(title = "Boston Crime Density <br> 2015 - 2017", pal = colorNumeric('viridis', domain = boston_filtered()@data$n), values = boston_filtered()@data$n) 
+      addLegend(title = "Boston Crime Density <br> 2015 - 2017", 
+                pal = colorNumeric( "viridis", domain = boston_filtered()@data$n), 
+                values = boston_filtered()@data$n) 
   })
   
   # Plot output  for bar chart 
   output$hour_data <- renderPlot({
     
-    crime_filtered2() %>%
-      ggplot(aes(x=HOUR)) +
-      geom_histogram(bins = 24, color = "white", fill = "darkcyan") +
-      labs(y = "Frequency", x = "Hour", title = "Number of Incident Cases by Hour for Selected Neighbourhood") +
+    crime_filtered2() %>% 
+      ggplot(aes(x = HOUR)) +
+      coord_polar(theta = "x", start = -pi/45) +
+      geom_bar(stat = "count", color = "gray", fill = "darkcyan") +
+      scale_x_continuous(limits = c(-.5, 23.5), 
+                         breaks = seq(0, 23), labels = seq(0,23))  +
+      ylab("Frequency") +
+      xlab("Time (Hour)") +
       theme_classic() + theme(plot.title = element_text(size=26),
                               axis.text.x = element_text(size = 14),
                               axis.text.y = element_text( size = 14),
-                              axis.title=element_text(size=18)) +                                                                                          
-      scale_x_continuous(limits=c(0, 23), breaks=seq(0,23,1))
+                              axis.title=element_text(size=18),
+                              axis.ticks.x=element_blank(), 
+                              axis.line=element_blank())                                                                                         
+    
     
     
   })
@@ -173,11 +248,6 @@ server <- function(input, output) {
   show("app-content")
   
   
-  # Exit window
-  observeEvent(input$close, {
-    js$closeWindow()
-    stopApp()
-  })
 }
 
 # RUN APPLICATION ==========================================================================================================================================================================

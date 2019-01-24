@@ -16,6 +16,13 @@ The development of a shiny app using the city of Boston's crime rate.
     * [Deployed app link](https://hfboyce.shinyapps.io/dsci_532-boston-crime-rate/)
 
 
+- Feedback Session:      
+    * Feedback for [Crime_population](https://github.com/UBC-MDS/Crime_population) can be found in issue [#16](https://github.com/UBC-MDS/Crime_population/issues/16)          
+    * Feedback for [college_scorecard](https://github.com/UBC-MDS/college_scorecard) can be in found in issue [#14](https://github.com/UBC-MDS/college_scorecard/issues/14)           
+    
+    
+- Milestone 3: 
+
 
 ### Releases:
 
