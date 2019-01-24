@@ -62,15 +62,10 @@ color: #FFFFFF;
 }
 "
 
-
-<<<<<<< HEAD
 # ADD JS CLOSE ON CLICK FEATURE ============================================================================================================================================================
 jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 
-# DEFINE UI FOR APP.  WILL DISPLAY MAP AND BAR CHART =======================================================================================================================================
-=======
 # DEFINE UI FOR APP.  WILL DISPLAY MAP AND BAR CHART ========================================================================================================================================
->>>>>>> b4afce3771b172fc4f49b9a8fe3730baa2300268
 
 ui <- fluidPage(theme = shinytheme("cosmo"),useShinyjs(),
                 inlineCSS(appCSS), 
@@ -214,8 +209,13 @@ server <- function(input, output) {
       addPolygons(data = boston_filtered(), 
                   weight = 1, color = "white",
                   fillColor = ~pal(boston_filtered()@data$n), 
-                  fillOpacity = 0.65) %>%
-      addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray") %>%
+                  fillOpacity = 0.65,
+                  label = boston_filtered()@data$Name,
+                  highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
+                  popup = paste0(boston_filtered()@data$Name, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
+      addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray", label = ~Name, 
+                  highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
+                  popup = paste0(boston_no_data@data$Name, "<br>Missing Data.")) %>%
       addLegend(title = "Boston Crime Density <br> 2015 - 2017", 
                 pal = colorNumeric( "viridis", domain = boston_filtered()@data$n), 
                 values = boston_filtered()@data$n) 
