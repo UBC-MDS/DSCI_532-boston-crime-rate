@@ -225,19 +225,24 @@ server <- function(input, output) {
   output$hour_data <- renderPlot({
     
     crime_filtered2() %>% 
-      ggplot(aes(x = HOUR)) +
+      ggplot(aes(x = HOUR, fill = ..count..)) +
       coord_polar(theta = "x", start = -pi/45) +
-      geom_bar(stat = "count", color = "gray", fill = "darkcyan") +
+      geom_bar(stat = "count") +
       scale_x_continuous(limits = c(-.5, 23.5), 
                          breaks = seq(0, 23), labels = seq(0,23))  +
+      scale_fill_viridis_c() +
+      labs(fill = guide_legend("Activity Count:")) +
       ylab("Frequency") +
       xlab("Time (Hour)") +
-      theme_classic() + theme(plot.title = element_text(size=26),
-                              axis.text.x = element_text(size = 14),
-                              axis.text.y = element_text( size = 14),
-                              axis.title=element_text(size=18),
-                              axis.ticks.x=element_blank(), 
-                              axis.line=element_blank())                                                                                         
+      theme_classic() + 
+      theme(plot.title = element_text(size=26),
+            axis.text.x = element_text(size = 14),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.line = element_blank())      
+      
     
     
     
