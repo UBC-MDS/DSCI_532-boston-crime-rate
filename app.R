@@ -212,13 +212,13 @@ server <- function(input, output) {
                   fillOpacity = 0.65,
                   label = boston_filtered()@data$Name,
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
-                  popup = paste0(boston_filtered()@data$Name, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
+                  popup = paste0(boston_filtered()@data$xName, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
       addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray", label = ~Name, 
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
                   popup = paste0(boston_no_data@data$Name, "<br>Missing Data.")) %>%
       addLegend(title = "Boston Crime Density <br> 2015 - 2017", 
                 pal = colorNumeric( "viridis", domain = boston_filtered()@data$n), 
-                values = boston_filtered()@data$n) 
+                values = boston_filtered()@data$n, labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))) 
   })
   
   # Plot output  for bar chart 
@@ -234,26 +234,20 @@ server <- function(input, output) {
       labs(fill = guide_legend("Activity Count:")) +
       ylab("Frequency") +
       xlab("Time (Hour)") +
-<<<<<<< HEAD
-      theme_minimal() + theme(plot.title = element_text(size=26),
-                              axis.text.x = element_text(size = 14),
-                              axis.text.y = element_text( size = 14),
-                              axis.title=element_text(size=18),
-                              axis.ticks.x=element_blank(), 
-                              axis.line=element_blank())                                                                                         
-=======
-      theme_classic() + 
+      theme_minimal() + 
       theme(plot.title = element_text(size=26),
-            axis.text.x = element_text(size = 14),
+            axis.text.x = element_text(size = 22),
             axis.text.y = element_blank(),
-            axis.ticks.y = element_blank(),
-            axis.ticks.x = element_blank(),
             axis.title.y = element_blank(),
-            axis.line = element_blank())      
+            axis.title.x = element_text(size=25),
+            axis.line = element_blank(),
+            legend.text = element_text(size = 18),
+            legend.title = element_text(size = 20,face = "bold"),
+            legend.box.margin = margin(12, 12, 12, 12)) +
+       guides(fill = guide_colourbar(barwidth = 2, barheight = 18))
       
->>>>>>> upstream/master
-    
-    
+
+  
     
   })
   
