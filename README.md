@@ -21,7 +21,7 @@ The development of a shiny app using the city of Boston's crime rate.
     * Feedback for [college_scorecard](https://github.com/UBC-MDS/college_scorecard) can be in found in issue [#14](https://github.com/UBC-MDS/college_scorecard/issues/14)           
     
     
-- Milestone 3: 
+- Milestone 3: [Milestone3 writeup](https://github.com/UBC-MDS/DSCI_532-boston-crime-rate/blob/master/doc/Milestone3.md)
 
 
 ### Releases:
