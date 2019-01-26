@@ -1,25 +1,16 @@
 # Milestone 3
 
-As in Milestone 2, you should provide a writeup to go with Milestone 3. In it, you should include:
-
-
 #### Reflection on the usefulness of the feedback you received.
 
-Here are some questions to get some ideas flowing. You aren't expected to (and probably shouldn't) answer all of these questions.
 
-Reflect on the usability of your app. How easy or hard was it for your peers to use your app? Did you expect them to use the app in they way they did?
-What things did you hear that's similar across reviewers? Is there a theme here?
-From the feedback, what things do you think are appropriate to change in your app, particularly given the time frame you have to improve the app?
-What is unreasonable to change, and why? Time restraints? Too technical?
-What feedback was the most/least valuable?
-What part of the feedback process was most/least valuable?
-What did you learn from your experience being a "fly-on-the-wall". Was this useful? Why or why not?
-Did the feedback process lead to an improved app? What parts were valuable? What parts were not valuable?
+> The feedback sessions definitely lead to an improved app.  The two most valuable parts were (1) the suggestion to implement a hover feature and (2) to change the histogram from a standard chart to a circular chart laid out on a polar coordinate system.  With the hover feature implemented, users are now able to see district names associated with each polygon in the shapefile.  This makes the app much more informative to users outside of Boston who might not be familiar with the city layout.  Furthermore, the user is able to interact with each shapefile through a click in order to get an exact "Activity Count" (or number of crimes according to the user defined filter).
+
+> The histogram, in our opinion, is much better suited as a circular plot.  Since the x-axis represents "hours in a day", a circular plot makes the histogram feel almost like a clock.
+
+> One thing we thought was unreasonable to change was the color palette associated with our count data.  Initially, we chose to use 'viridis', and in the end we decided to stay with that.  Our feedback sessions recommended that we change this palette to a single hue with an intensity gradient, however, when we tried this we found that the app was no longer as visually appealing.  In our "Visualization II" course, we learned that there is in fact value in making maps and plots look good if they are user facing (especially if it's only at the cost of slight effectiveness).
 
 #### Reflection on how your project has changed since Milestone 2, and why.
 
-More questions to get some ideas flowing:
+> Bar none, the hardest thing to implement in shiny was merging our tabular data with our shapefile in order to colour our polygons based on aggregated data.  It was definitely time consuming, however, we knew it could be done... it was just a matter of hacking our way through the problem.
 
-Was something too difficult to implement in shiny? Or too time consuming? Say so here.
-Did your objective change?
-Was there a better design choice?
+> We also came across some limitations with the `leaflet` package for R.  We found that it doesn't handle the hover and pop-up features as nicely as we hoped, however, with some work we were still able to get those features to work despite them not appearing as we wish.
