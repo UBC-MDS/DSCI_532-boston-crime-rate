@@ -26,5 +26,8 @@ The development of a shiny app using the city of Boston's crime rate.
 ### Releases:
 
 * Proposal:  [V1.0](https://github.com/UBC-MDS/DSCI_532-boston-crime-rate/releases/tag/V1.0)
-* Milestone: [V2.0](https://github.com/UBC-MDS/DSCI_532-boston-crime-rate/releases/tag/V2.0)
+* Milestone 2: [V2.0](https://github.com/UBC-MDS/DSCI_532-boston-crime-rate/releases/tag/V2.0)
+* Milestone 3: [V3.0](https://github.com/UBC-MDS/DSCI_532-boston-crime-rate/releases/tag/V3.0)
+
+
 
