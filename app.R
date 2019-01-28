@@ -212,7 +212,7 @@ server <- function(input, output) {
                   fillOpacity = 0.65,
                   label = boston_filtered()@data$Name,
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
-                  popup = paste0(boston_filtered()@data$Name, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
+                  popup = paste0(boston_filtered()@data$xName, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
       addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray", label = ~Name, 
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
                   popup = paste0(boston_no_data@data$Name, "<br>Missing Data.")) %>%
