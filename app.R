@@ -227,7 +227,11 @@ server <- function(input, output) {
     crime_filtered2() %>% 
       ggplot(aes(x = HOUR, fill = ..count..)) +
       coord_polar(theta = "x", start = -pi/45) +
+<<<<<<< HEAD
+      geom_bar(stat = "count", binwidth = 1) +
+=======
       stat_count(geom  = "bar", colour = "white", width = 1) +
+>>>>>>> f11117fa6de3e8b7681d3b6e9bb180cab084ef32
       scale_x_continuous(limits = c(-.5, 23.5), 
                          breaks = seq(0, 23), labels = seq(0,23))  +
       scale_fill_distiller(palette='YlOrRd', trans = "reverse") +
