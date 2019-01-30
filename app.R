@@ -212,7 +212,7 @@ server <- function(input, output) {
                   fillOpacity = 0.65,
                   label = boston_filtered()@data$Name,
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
-                  popup = paste0(boston_filtered()@data$Name, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
+                  popup = paste0(boston_filtered()@data$xName, "<br>Activity Count: ", boston_filtered()@data$n)) %>%
       addPolygons(data = boston_no_data, weight = 1, color = "white", fillColor = "gray", label = ~Name, 
                   highlightOptions = highlightOptions(color = "black", weight = 3, bringToFront = TRUE),
                   popup = paste0(boston_no_data@data$Name, "<br>Missing Data.")) %>%
@@ -227,7 +227,11 @@ server <- function(input, output) {
     crime_filtered2() %>% 
       ggplot(aes(x = HOUR, fill = ..count..)) +
       coord_polar(theta = "x", start = -pi/45) +
+<<<<<<< HEAD
       geom_bar(stat = "count", binwidth = 1) +
+=======
+      stat_count(geom  = "bar", colour = "white", width = 1) +
+>>>>>>> f11117fa6de3e8b7681d3b6e9bb180cab084ef32
       scale_x_continuous(limits = c(-.5, 23.5), 
                          breaks = seq(0, 23), labels = seq(0,23))  +
       scale_fill_distiller(palette='YlOrRd', trans = "reverse") +
@@ -244,7 +248,7 @@ server <- function(input, output) {
             legend.text = element_text(size = 18),
             legend.title = element_text(size = 20,face = "bold"),
             legend.box.margin = margin(12, 12, 12, 12)) +
-       guides(fill = guide_colourbar(barwidth = 2, barheight = 18, reverse = TRUE))
+      guides(fill = guide_colourbar(barwidth = 2, barheight = 18, reverse = TRUE))
       
 
   
